@@ -1,0 +1,17 @@
+node_modules
+dist
+build
+*.config.js
+*.config.ts
+.public
+.output
+.vercel
+.next
+coverage
+.nyc_output
+.cache
+.temp
+.tmp
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
