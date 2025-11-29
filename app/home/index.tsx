@@ -1,7 +1,22 @@
+import { Button } from '@mui/material';
+import { signOut, useSession } from 'next-auth/react';
 import logoDark from './logo-dark.svg';
 import logoLight from './logo-light.svg';
+import { useNavigate } from 'react-router';
 
-export function Welcome() {
+const HomePage = () => {
+  const { data: session } = useSession();
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate('/auth/login');
+  };
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false });
+    navigate('/auth/login');
+  };
+
   return (
     <main className="flex items-center justify-center pt-16 pb-4">
       <div className="flex-1 flex flex-col items-center gap-16 min-h-0">
@@ -18,6 +33,16 @@ export function Welcome() {
               className="hidden w-full dark:block"
             />
           </div>
+          {session && (
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
+                Welcome, {session.user?.name}!
+              </h2>
+              <p className="text-gray-600 dark:text-gray-400">
+                {session.user?.email}
+              </p>
+            </div>
+          )}
         </header>
         <div className="max-w-[300px] w-full space-y-6 px-4">
           <nav className="rounded-3xl border border-gray-200 p-6 dark:border-gray-700 space-y-4">
@@ -39,12 +64,36 @@ export function Welcome() {
                 </li>
               ))}
             </ul>
+            {session ? (
+              <div className="space-y-3">
+                <Button variant="contained" color="vibrant" fullWidth>
+                  Dashboard
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth
+                  onClick={handleLogout}
+                >
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <Button
+                variant="contained"
+                color="ochre"
+                fullWidth
+                onClick={handleLogin}
+              >
+                Get Started
+              </Button>
+            )}
           </nav>
         </div>
       </div>
     </main>
   );
-}
+};
 
 const resources = [
   {
@@ -87,3 +136,5 @@ const resources = [
     ),
   },
 ];
+
+export default HomePage;
