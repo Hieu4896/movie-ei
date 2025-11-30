@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material/styles';
-import { teal, orange } from '@mui/material/colors';
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -11,18 +10,6 @@ declare module '@mui/material/styles' {
     ochre?: PaletteOptions['primary'];
     vibrant?: PaletteOptions['primary'];
     accent?: PaletteOptions['primary'];
-  }
-
-  interface BreakpointOverrides {
-    xs: false; // removes the `xs` breakpoint
-    sm: false;
-    md: false;
-    lg: false;
-    xl: false;
-    mobile: true; // adds the `mobile` breakpoint
-    tablet: true;
-    laptop: true;
-    desktop: true;
   }
 }
 
@@ -37,14 +24,16 @@ declare module '@mui/material/Button' {
 export const theme = createTheme({
   breakpoints: {
     values: {
-      mobile: 0,
-      tablet: 640,
-      laptop: 1024,
-      desktop: 1200,
+      xs: 320,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
     },
   },
   typography: {
     fontFamily: [
+      'Outfit', // Adding a more modern, geometric font if available, falling back to system
       '-apple-system',
       'BlinkMacSystemFont',
       '"Segoe UI"',
@@ -52,77 +41,99 @@ export const theme = createTheme({
       '"Helvetica Neue"',
       'Arial',
       'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
     ].join(','),
     h1: {
       fontWeight: 800,
-      letterSpacing: '-0.02em',
+      letterSpacing: '-0.03em',
+      fontSize: '3.5rem',
+      lineHeight: 1.1,
     },
     h2: {
+      fontWeight: 700,
+      letterSpacing: '-0.02em',
+      fontSize: '2.5rem',
+    },
+    h3: {
       fontWeight: 700,
       letterSpacing: '-0.01em',
     },
     button: {
-      fontWeight: 600,
+      fontWeight: 700,
       textTransform: 'none',
-      borderRadius: 12,
+      letterSpacing: '0.02em',
     },
+  },
+  shape: {
+    borderRadius: 12,
   },
   palette: {
     primary: {
-      light: teal[300],
-      main: teal[600],
-      dark: teal[800],
+      light: '#4FD1C5',
+      main: '#38B2AC',
+      dark: '#319795',
       contrastText: '#ffffff',
     },
     secondary: {
-      light: orange[300],
-      main: orange[600],
-      dark: orange[800],
+      light: '#FBD38D',
+      main: '#F6AD55',
+      dark: '#DD6B20',
       contrastText: '#ffffff',
     },
     ochre: {
-      main: '#E3D026',
-      light: '#E9DB5D',
-      dark: '#A29415',
-      contrastText: '#242105',
+      main: '#F6E05E',
+      light: '#FAF089',
+      dark: '#D69E2E',
+      contrastText: '#1A202C',
     },
     vibrant: {
-      main: '#FF006E', // Hot pink
-      light: '#FF4081',
-      dark: '#C51162',
+      main: '#FF0080', // More vibrant pink
+      light: '#FF40A0',
+      dark: '#D9006C',
       contrastText: '#ffffff',
     },
     accent: {
-      main: '#8338EC', // Purple
-      light: '#A855F7',
-      dark: '#6B21A8',
+      main: '#7928CA', // Deep vibrant purple
+      light: '#9F7AEA',
+      dark: '#551A8B',
       contrastText: '#ffffff',
     },
     background: {
-      default: '#FAFAFA',
+      default: '#F7FAFC', // Cool gray/white
       paper: '#FFFFFF',
+    },
+    text: {
+      primary: '#1A202C',
+      secondary: '#4A5568',
     },
   },
   components: {
     MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8, // Slightly more square for "block" feel
+          padding: '10px 20px',
+          boxShadow: 'none',
+          '&:hover': {
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            transform: 'translateY(-1px)',
+          },
+          transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+        },
+        contained: {
+          '&:active': {
+            transform: 'translateY(0)',
+          },
+        },
+      },
       variants: [
         {
           props: { variant: 'contained', color: 'ochre' },
           style: ({ theme }) => ({
             backgroundColor: theme.palette.ochre.main,
             color: theme.palette.ochre.contrastText,
-            fontWeight: 700,
-            padding: '12px 24px',
-            fontSize: '1rem',
             '&:hover': {
               backgroundColor: theme.palette.ochre.dark,
-              transform: 'translateY(-2px)',
-              boxShadow: '0 8px 16px rgba(227, 208, 38, 0.3)',
             },
-            transition: 'all 0.2s ease-in-out',
           }),
         },
         {
@@ -130,15 +141,10 @@ export const theme = createTheme({
           style: ({ theme }) => ({
             backgroundColor: theme.palette.vibrant.main,
             color: theme.palette.vibrant.contrastText,
-            fontWeight: 700,
-            padding: '12px 24px',
-            fontSize: '1rem',
             '&:hover': {
               backgroundColor: theme.palette.vibrant.dark,
-              transform: 'translateY(-2px)',
-              boxShadow: '0 8px 16px rgba(255, 0, 110, 0.3)',
+              boxShadow: `0 8px 20px ${theme.palette.vibrant.main}40`,
             },
-            transition: 'all 0.2s ease-in-out',
           }),
         },
         {
@@ -146,27 +152,10 @@ export const theme = createTheme({
           style: ({ theme }) => ({
             backgroundColor: theme.palette.accent.main,
             color: theme.palette.accent.contrastText,
-            fontWeight: 700,
-            padding: '12px 24px',
-            fontSize: '1rem',
             '&:hover': {
               backgroundColor: theme.palette.accent.dark,
-              transform: 'translateY(-2px)',
-              boxShadow: '0 8px 16px rgba(131, 56, 236, 0.3)',
+              boxShadow: `0 8px 20px ${theme.palette.accent.main}40`,
             },
-            transition: 'all 0.2s ease-in-out',
-          }),
-        },
-        {
-          props: { variant: 'outlined' },
-          style: () => ({
-            borderWidth: 2,
-            fontWeight: 600,
-            '&:hover': {
-              borderWidth: 2,
-              transform: 'translateY(-1px)',
-            },
-            transition: 'all 0.2s ease-in-out',
           }),
         },
       ],
@@ -175,12 +164,41 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 16,
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+          border: '1px solid rgba(0,0,0,0.05)',
+          boxShadow:
+            '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)', // Subtle block shadow
+          overflow: 'hidden',
+          transition: 'all 0.3s ease',
           '&:hover': {
             transform: 'translateY(-4px)',
-            boxShadow: '0 12px 40px rgba(0, 0, 0, 0.12)',
+            boxShadow:
+              '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)',
           },
-          transition: 'all 0.3s ease-in-out',
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            borderRadius: 12,
+            backgroundColor: '#fff',
+            transition: 'all 0.2s ease',
+            '& fieldset': {
+              borderColor: '#E2E8F0',
+              borderWidth: 2,
+            },
+            '&:hover fieldset': {
+              borderColor: '#CBD5E0',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: '#7928CA', // Accent color
+              borderWidth: 2,
+            },
+            '&.Mui-focused': {
+              boxShadow: '0 0 0 4px rgba(121, 40, 202, 0.1)',
+            },
+          },
         },
       },
     },
