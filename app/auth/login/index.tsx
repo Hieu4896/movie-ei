@@ -8,7 +8,7 @@ import {
   Alert,
   CircularProgress,
 } from '@mui/material';
-import { signIn } from 'next-auth/react';
+
 import { useNavigate } from 'react-router';
 import type React from 'react';
 
@@ -44,32 +44,9 @@ export default function Login() {
     setLoading(true);
     setError('');
 
-    try {
-      const res = await signIn('credentials', {
-        redirect: false,
-        email,
-        password,
-      });
-
-      if (res?.error) {
-        // Parse error if it's JSON string, otherwise use as is
-        let errorMessage = res.error;
-        try {
-          const parsedError = JSON.parse(res.error);
-          errorMessage = parsedError.message || parsedError.code || res.error;
-        } catch {
-          errorMessage = res.error;
-        }
-        setError(errorMessage);
-      } else {
-        // Login successful, redirect to home
-        navigate('/');
-      }
-    } catch {
-      setError('An unexpected error occurred. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+    // Mock login
+    navigate('/');
+    setLoading(false);
   };
 
   return (
@@ -150,13 +127,16 @@ export default function Login() {
               sx={{
                 '& .MuiOutlinedInput-root': {
                   borderRadius: 3,
+                  backgroundColor: '#f8fafc',
                   transition: 'all 0.2s ease-in-out',
                   '&:hover': {
+                    backgroundColor: '#fff',
                     '& .MuiOutlinedInput-notchedOutline': {
                       borderColor: '#00897B',
                     },
                   },
                   '&.Mui-focused': {
+                    backgroundColor: '#fff',
                     '& .MuiOutlinedInput-notchedOutline': {
                       borderColor: '#00897B',
                       borderWidth: 2,
@@ -167,6 +147,12 @@ export default function Login() {
                   '&.Mui-focused': {
                     color: '#00897B',
                   },
+                },
+                '& input:-webkit-autofill': {
+                  WebkitBoxShadow: '0 0 0 1000px #fff inset',
+                  WebkitTextFillColor: '#000',
+                  caretColor: '#000',
+                  borderRadius: 'inherit',
                 },
               }}
             />
@@ -184,13 +170,16 @@ export default function Login() {
               sx={{
                 '& .MuiOutlinedInput-root': {
                   borderRadius: 3,
+                  backgroundColor: '#f8fafc',
                   transition: 'all 0.2s ease-in-out',
                   '&:hover': {
+                    backgroundColor: '#fff',
                     '& .MuiOutlinedInput-notchedOutline': {
                       borderColor: '#00897B',
                     },
                   },
                   '&.Mui-focused': {
+                    backgroundColor: '#fff',
                     '& .MuiOutlinedInput-notchedOutline': {
                       borderColor: '#00897B',
                       borderWidth: 2,
@@ -201,6 +190,12 @@ export default function Login() {
                   '&.Mui-focused': {
                     color: '#00897B',
                   },
+                },
+                '& input:-webkit-autofill': {
+                  WebkitBoxShadow: '0 0 0 1000px #fff inset',
+                  WebkitTextFillColor: '#000',
+                  caretColor: '#000',
+                  borderRadius: 'inherit',
                 },
               }}
             />

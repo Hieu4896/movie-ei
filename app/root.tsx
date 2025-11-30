@@ -12,7 +12,6 @@ import './app.css';
 import type React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './theme';
-import { SessionProvider } from 'next-auth/react';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -37,7 +36,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <SessionProvider>{children}</SessionProvider>
+        {children}
         <ScrollRestoration />
         <Scripts />
       </body>
